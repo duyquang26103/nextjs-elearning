@@ -1,6 +1,15 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import PrimarySearchAppBar from "@/components/navigation-bar/app.header";
+import React from "react";
+import {Container} from "@mui/material";
+import StickyFooter from "@/components/app.footer";
+import BasicBreadcrumbs from "@/components/app.breadcrumbs";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Suspense } from 'react';
+import Loading from "@/app/loading";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +25,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      <Suspense fallback={<Loading />}/>
+      <PrimarySearchAppBar/>
+      <BasicBreadcrumbs/>
+      <Container>
+          {children}
+      </Container>
+      <StickyFooter/>
+      <ToastContainer />
+      </body>
     </html>
   )
 }
