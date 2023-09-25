@@ -9,12 +9,14 @@ import Button from "@mui/material/Button";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import CoursePagination from './app.pagination'
-import {useContext} from "react";
-import { CourseContext } from "@/app/courses/courseContext";
+import { useCourses } from "@/app/middleware";
 
 export default function CourseCards() {
-    // @ts-ignore
-    const { data } = useContext(CourseContext);
+    const { data }  = useCourses();
+    console.log(data)
+    if (data === undefined) {
+        return "Loading";
+    }
     return (
         <div>
             <div>
