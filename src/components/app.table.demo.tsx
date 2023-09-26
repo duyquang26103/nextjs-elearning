@@ -59,7 +59,7 @@ function EditToolbar(props: EditToolbarProps) {
 
     const handleClose = () => setOpen(false);
 
-    const handleCreateItem = () => {
+    const  handleCreateItem = async () => {
         // setId(randomId())
         setRows((oldRows) => {
             const res = fetch('http://localhost:8000/persons',
@@ -72,7 +72,7 @@ function EditToolbar(props: EditToolbarProps) {
                 body: JSON.stringify({id, lastName, firstName, age})
             }).then(res => res.json()).then(res => {
             if (res) {
-                mutate('http://localhost:8000/persons');
+               mutate('http://localhost:8000/persons');
             }
         })
             console.log(res)
@@ -131,7 +131,7 @@ function EditToolbar(props: EditToolbarProps) {
 }
 
 interface IProps {
-    persons: IPerson[]
+    persons: IUser[]
 }
 
 export default function TableComponentsDemo(props: IProps) {

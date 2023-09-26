@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Image from "next/image";
 import Button from '@mui/joy/Button';
-import {useCourseDetail} from "@/app/middleware";
+import { useCourseDetails } from "@/app/middleware";
 
 interface IProps {
     courseName: string
@@ -21,14 +21,16 @@ const style = {
 }
 export default function CourseDetails(props: IProps) {
     const { courseName} = props;
-    const [data] = useCourseDetail(courseName);
+    const { data, isLoading, error} = useCourseDetails(courseName);
+    if (error) return "An error has occurred.";
+    if (isLoading) return "Loading...";
     return (
         <>
             <Box sx={{ flexGrow: 1 }} style={style}>
                 <Grid container spacing={2}><Grid item xs={2}>
                     </Grid>
                     <Grid item xs={4}>
-                        <Typography variant="h5" sx={{ color: '#fff', fontSize: '48px', lineHeight: 1.25}}> {data.title} </Typography>
+                        <Typography variant="h5" sx={{ color: '#fff', fontSize: '48px', lineHeight: 1.25}}> {data.courseName} </Typography>
                         <Typography>Tổng Quan</Typography>
                         <Typography>
                             Trainer:	&nbsp;

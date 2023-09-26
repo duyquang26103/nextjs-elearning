@@ -12,11 +12,10 @@ import CoursePagination from './app.pagination'
 import { useCourses } from "@/app/middleware";
 
 export default function CourseCards() {
-    const { data }  = useCourses();
-    console.log(data)
-    if (data === undefined) {
-        return "Loading";
-    }
+    const { data, isLoading, error }  = useCourses();
+    if (error) return "An error has occurred.";
+    if (isLoading) return "Loading...";
+    console.log("data", data.map(course => console.log(course)))
     return (
         <div>
             <div>
@@ -25,16 +24,16 @@ export default function CourseCards() {
             <Box sx={{flexGrow: 1}}>
                 <Grid container spacing={2}>
                     {data.map(course => (
-                        <Grid key={course.title} item xs={4}>
+                        <Grid key={course.courseName} item xs={4}>
                             <Card sx={{Width: 345, Height: 400}}>
                                 <CardMedia
                                     sx={{height: 180}}
                                     image={`/courses/${course.image}`}
-                                    title={course.title}
+                                    title={course.courseName}
                                 />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
-                                        {course.title}
+                                        {course.courseName}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
                                         {course.description}
@@ -42,7 +41,7 @@ export default function CourseCards() {
                                 </CardContent>
                                 <CardActions>
                                     <Button>
-                                        <Link style={{'textDecoration': 'none'}} href={`/courses/${course.path}`}>
+                                        <Link style={{'textDecoration': 'none'}} href={`/${course.category.categoryName}/course/${course.courseName}`}>
                                             Enroll Now
                                         </Link>
                                     </Button>

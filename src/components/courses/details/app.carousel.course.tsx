@@ -1,14 +1,15 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import { Paper, Button } from '@mui/material'
-import {useCourseDetail} from "@/app/middleware";
+import {useCourseDetails} from "@/app/middleware";
 import Image from "next/image";
 
 export function CourseSlider(props: any)
 {
     const { courseName} = props;
-    const [data] = useCourseDetail(courseName);
-
+    const { data, isLoading, error } = useCourseDetails(courseName);
+    if (error) return "An error has occurred.";
+    if (isLoading) return "Loading...";
     let items = [data, data, data]
 
     return (

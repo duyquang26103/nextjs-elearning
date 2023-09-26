@@ -1,10 +1,9 @@
 import useSWR from "swr";
 
-export function myMiddleware (useSWRNext) {
-    return (key, fetcher, config) => {
+export function middleware(useSWRNext: any) {
+    return (key: string, fetcher: () => Promise<any>, config: any) => {
         // Add logger to the original fetcher.
-        const extendedFetcher = (...args) => {
-            console.log('SWR Request:', key)
+        const extendedFetcher = (...args: any[]) => {
             return fetcher(...args)
         }
 
@@ -15,16 +14,21 @@ export function myMiddleware (useSWRNext) {
 
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export const useCourses = () => {
-    const { data, isLoading, error } = useSWR("http://localhost:8000/courses", fetcher,  { use: [myMiddleware] });
-    if (error) return "An error has occurred.";
-    if (isLoading) return "Loading...";
-    return { data } ;
+export const useCourses = (): { data: ICourseDetails[], isLoading: boolean, error: any } => {
+    const {data, isLoading, error} = useSWR("http://localhost:4000/courses", fetcher, {use: [middleware]});
+    return {data, isLoading, error};
 };
 
-export const useCourseDetail = (courseName: string) => {
-    const { data, isLoading, error } = useSWR(`http://localhost:8000/courses`, fetcher, { use: [myMiddleware] });
-    if (error) return "An error has occurred.";
-    if (isLoading) return "Loading...";
-    return data.filter((item: any) => item.path == courseName);
+export const useCourseDetails = (courseName: string): { data: ICourseDetails, isLoading: boolean, error: any } => {
+    const {data, isLoading, error} = useSWR(`http://localhost:4000/courses`, fetcher, {use: [middleware]});
+    let courseDetails;
+    if (data) {
+        courseDetails = data.filter((item: any) => item.path == courseName)
+    }
+    return {data: courseDetails, isLoading, error};
+};
+
+export const useCategories = (): { data: any, isLoading: boolean, error: any } => {
+    const {data, isLoading, error} = useSWR(`http://localhost:4000/categories`, fetcher, {use: [middleware]});
+    return {data, isLoading, error};
 };

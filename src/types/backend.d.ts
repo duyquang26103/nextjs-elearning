@@ -1,4 +1,4 @@
-interface IPerson {
+interface IUser {
     id: number,
     lastName: string,
     firstName: string,
@@ -7,12 +7,12 @@ interface IPerson {
 }
 
 interface ICategories {
-    name: string,
+    categoryName: string,
     courses: ICourse[]
 }
 
 interface ICourse {
-    name: string,
+    courseName: string,
     subCourse?: subCourse[]
 }
 
@@ -21,7 +21,8 @@ interface subCourse {
 }
 
 interface ICourseDetails {
-    title: string,
+    category: ICategories,
+    courseName: string,
     description: string,
     image: string,
     path: string,
