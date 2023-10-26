@@ -10,6 +10,8 @@ export function CourseSlider(props: any)
     const { data, isLoading, error } = useCourseDetails(courseName);
     if (error) return "An error has occurred.";
     if (isLoading) return "Loading...";
+
+    console.log(data)
     let items = [data, data, data]
 
     return (
@@ -27,7 +29,7 @@ function Item(props: any)
         <Paper>
             <h2>{props.item.title}</h2>
             <p>{props.item.description}</p>
-            <Image src={`/courses/${props.item.image}`} width={'100'} height={'100'} alt={'course-image'}/>
+            <Image src={`/courses/${props.item.image}`} width={'100'} height={'100'} alt={'courses-image'}/>
             <br/>
             <Button className="CheckButton">
                 Check it out!

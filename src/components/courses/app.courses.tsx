@@ -10,12 +10,22 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import CoursePagination from './app.pagination'
 import { useCourses } from "@/app/middleware";
+import {useEffect, useState} from "react";
 
-export default function CourseCards() {
+interface IProps {
+    categoryName: string
+}
+
+export default function CourseCards(props: IProps) {
     const { data, isLoading, error }  = useCourses();
     if (error) return "An error has occurred.";
     if (isLoading) return "Loading...";
-    console.log("data", data.map(course => console.log(course)))
+    let courses = data.data
+
+    if(props.categoryName !== 'all') {
+        console.log(props.categoryName)
+        courses = courses.filter(item => props.categoryName == item.category.categoryName.toLowerCase())
+    }
     return (
         <div>
             <div>
@@ -23,12 +33,12 @@ export default function CourseCards() {
             </div>
             <Box sx={{flexGrow: 1}}>
                 <Grid container spacing={2}>
-                    {data.map(course => (
+                    {courses.map(course => (
                         <Grid key={course.courseName} item xs={4}>
                             <Card sx={{Width: 345, Height: 400}}>
                                 <CardMedia
                                     sx={{height: 180}}
-                                    image={`/courses/${course.image}`}
+                                    image={`http://localhost:4000/images/${course.image}`}
                                     title={course.courseName}
                                 />
                                 <CardContent>
@@ -41,7 +51,7 @@ export default function CourseCards() {
                                 </CardContent>
                                 <CardActions>
                                     <Button>
-                                        <Link style={{'textDecoration': 'none'}} href={`/${course.category.categoryName}/course/${course.courseName}`}>
+                                        <Link style={{'textDecoration': 'none'}} href={`/courses/${(course.category.categoryName).toLowerCase()}/${(course.courseName).toLowerCase()}`}>
                                             Enroll Now
                                         </Link>
                                     </Button>

@@ -1,3 +1,5 @@
+declare module '@kintone/rest-api-client';
+
 interface IUser {
     id: number,
     lastName: string,
@@ -23,8 +25,10 @@ interface subCourse {
 interface ICourseDetails {
     category: ICategories,
     courseName: string,
+    instructor: string,
     description: string,
     image: string,
     path: string,
     details: string
 }
+

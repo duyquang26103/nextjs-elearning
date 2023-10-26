@@ -12,8 +12,6 @@ export default function AppCategories() {
     const open = Boolean(anchorEl);
     const {data, isLoading, error} = useCategories();
     if (error) return "An error has occurred.";
-    if (isLoading) return "Loading...";
-    const categories: ICategories[] = data.data;
 
     const handleClick = (event: any) => {
         setAnchorEl(event.currentTarget);
@@ -35,7 +33,7 @@ export default function AppCategories() {
                 Categories
             </Button>
             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                {categories?.map((item: ICategories) => {
+                {data?.data.map((item: ICategories) => {
                     return <NestedMenuItem
                         key={item.categoryName}
                         label={item.categoryName}
@@ -45,7 +43,7 @@ export default function AppCategories() {
                             (
                                 <MenuItem key={course.courseName} onClick={handleClose}>
                                     <Link style={{textDecoration: 'none', color: 'rgba(0, 0, 0, 0.87)'}}
-                                          href={`/${item.categoryName}/course/${course.courseName}`}>{course.courseName}</Link>
+                                          href={`/courses/${item.categoryName}/${course.courseName}`}>{course.courseName}</Link>
                                 </MenuItem>
                             ))
                         }

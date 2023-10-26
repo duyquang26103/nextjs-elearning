@@ -9,7 +9,7 @@ export default function Home() {
         <>
             <main className={styles.main}>
                 <div className={styles.description}>
-                    <CourseCards/>
+                    <CourseCards categoryName={'all'}/>
                 </div>
             </main>
         </>
